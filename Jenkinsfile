@@ -59,6 +59,26 @@ pipeline{
                 }
             }
         }
+        stage('k8s deployment'){
+            steps{
+                script{
+                    withKubeConfig(caCertificate: '', clusterName: 'zomata', contextName: '', credentialsId: 'k8s', namespace: 'zomato', restrictKubeConfigAccess: false, serverUrl: 'https://9B0E634D4A14EF94B5C0ECBCA9EEF643.gr7.us-east-1.eks.amazonaws.com'){
+                        sh 'kubectl apply -f deployment.yml -f service.yml'
+                        sleep 60
+                    }
+                }
+            }
+        }
+        stage('verify deployment'){
+            steps{
+                script{
+                    withKubeConfig(caCertificate: '', clusterName: 'zomata', contextName: '', credentialsId: 'k8s', namespace: 'zomato', restrictKubeConfigAccess: false, serverUrl: 'https://9B0E634D4A14EF94B5C0ECBCA9EEF643.gr7.us-east-1.eks.amazonaws.com'){
+                        sh 'kubectl get pods'
+                        sh 'kubectl get svc'
+                    }
+                }
+            }
+        }
     }
 }
 
