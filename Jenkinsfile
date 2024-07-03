@@ -40,6 +40,25 @@ pipeline{
                 }
             }
         }
+        stage('docker img build and tag'){
+            steps{
+                sh 'docker build -t mukeshr29/zomato-jenkins .'
+            }
+        }
+        stage('docker image scan'){
+            steps{
+                sh 'trivy image --format table -o trivyimg-report.html mukeshr29/zomato-jenkins'
+            }
+        }
+        stage('dockerimage push'){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker'){
+                        sh 'docker push mukeshr29/zomato-jenkins'
+                    }
+                }
+            }
+        }
     }
 }
 
