@@ -27,7 +27,7 @@ pipeline{
                 script{
                     withSonarQubeEnv('sonar-server'){
                         sh '''
-                            $SCANNER_HOME/bin/sonar-scanner -Dsonar-projectName=zomata-clone-jen -Dsonar-projectKey=zomata-clone-jen
+                            $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=zomata-clone-jen -Dsonar.projectKey=zomata-clone-jen
                         '''
                     }
                 }
