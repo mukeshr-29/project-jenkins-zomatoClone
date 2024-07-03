@@ -63,7 +63,7 @@ pipeline{
             steps{
                 script{
                     withKubeConfig(caCertificate: '', clusterName: 'zomata', contextName: '', credentialsId: 'k8s', namespace: 'zomato', restrictKubeConfigAccess: false, serverUrl: 'https://622C179E106D3C06E5A8BA4259FA47A0.gr7.us-east-1.eks.amazonaws.com'){
-                        sh 'kubectl apply -f deployment.yml -f service.yml'
+                        sh 'kubectl apply -f deployment.yml -f service.yml -n zomato'
                         sleep 60
                     }
                 }
@@ -73,8 +73,8 @@ pipeline{
             steps{
                 script{
                     withKubeConfig(caCertificate: '', clusterName: 'zomata', contextName: '', credentialsId: 'k8s', namespace: 'zomato', restrictKubeConfigAccess: false, serverUrl: 'https://622C179E106D3C06E5A8BA4259FA47A0.gr7.us-east-1.eks.amazonaws.com'){
-                        sh 'kubectl get pods'
-                        sh 'kubectl get svc'
+                        sh 'kubectl get pods -n zomato'
+                        sh 'kubectl get svc -n zomato'
                     }
                 }
             }
